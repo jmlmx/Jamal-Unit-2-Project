@@ -1,4 +1,6 @@
 const User = require("../model/user")
+const Cart = require("../models/cart")
+const Item = require("../models/item")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 
@@ -85,6 +87,38 @@ exports.getUsers = async (req, res) => {
     try {
         const users = await User.find(req.body)//might need to remove req.body
         res.json(users)
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
+exports.addItem = async (req, res) => {
+    try {
+        const itemData = req.body
+        const user = User.FindOne({_id: req.params.id})
+        if (!user) {
+            throw new Error("User not found")
+        } else {
+            const newItem = await Item.create(itemData)
+            await newItem.save()
+            user.cart.addToSet(newItem)
+            await user.save()
+            res.json(user)
+        }
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
+exports.removeItem = async (req, res) => {
+    try {
+        const itemData = req.body
+        const user = User.FindOne({_id: req.params.id})
+        if (!user) {
+            throw new Error("No Item found")
+        } else {
+            
+        }
     } catch (error) {
         res.status(400).json({ message: error.message })
     }
