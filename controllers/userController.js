@@ -1,4 +1,4 @@
-const User = require("../model/user")
+const User = require("../models/user")
 const Cart = require("../models/cart")
 const Item = require("../models/item")
 const bcrypt = require("bcrypt")
@@ -12,7 +12,7 @@ exports.auth = async (req, res, next) => {
         if(!user) {
             throw new Error()
         }
-        eq.user = user
+        req.user = user
         next()
     } catch (error) {
         res.status(401).send("Not Authorized")
@@ -22,8 +22,8 @@ exports.auth = async (req, res, next) => {
 exports.createUser = async (req, res) => {
     try {
         const user = new User(req.body)
-        await user.save()
         const token = await user.generateAuthToken()
+        await user.save()
         res.json({user, token})
     } catch (error) {
         res.status(400).json({message:error.message})
@@ -32,7 +32,7 @@ exports.createUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
     try {
-        const user = await User.findOne({email: req.boy.email})
+        const user = await User.findOne({email: req.body.email})
         if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
         res.status(400).send("Email not found")
         } else {
@@ -85,7 +85,7 @@ exports.deleteUser = async (req, res) => {
 
 exports.getUsers = async (req, res) => {
     try {
-        const users = await User.find(req.body)//might need to remove req.body
+        const users = await User.find({})
         res.json(users)
     } catch (error) {
         res.status(400).json({ message: error.message })
@@ -117,7 +117,7 @@ exports.removeItem = async (req, res) => {
         if (!user) {
             throw new Error("No Item found")
         } else {
-            
+
         }
     } catch (error) {
         res.status(400).json({ message: error.message })
