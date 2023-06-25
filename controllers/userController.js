@@ -38,7 +38,6 @@ exports.loginUser = async (req, res) => {
         } else {
             user.loggedIn = true
             await user.save()
-            const token = await user.generateAuthToken()
             res.json({user, token})
         }
     } catch (error) {
@@ -52,10 +51,9 @@ exports.logoutUser = async (req, res) => {
         if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
             res.status400.send("Invalid credentials")
         } else {
-            const token = await user.generateAuthToken()
             user.loggedIn = false
             await user.save()
-            res.json({message: "Logged Out"})
+            res.json({user, token, message: "Logged Out"})
         }
     } catch (error) {
         res.status(400).json({ message: error.message })
