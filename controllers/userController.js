@@ -30,6 +30,15 @@ exports.createUser = async (req, res) => {
     }
 }
 
+exports.getAUser = async (req, res) => {
+    try {
+        const user = await User.findOne({_id: req.params.id})
+        res.json({user})
+    } catch (error) {
+        res.status(400).json({message:error.message})
+    }
+}
+
 exports.loginUser = async (req, res) => {
     try {
         const user = await User.findOne({email: req.body.email})
@@ -38,7 +47,7 @@ exports.loginUser = async (req, res) => {
         } else {
             user.loggedIn = true
             await user.save()
-            res.json({user, token})
+            res.json({user})
         }
     } catch (error) {
         res.status(400).json ({message: error.message})
@@ -93,7 +102,7 @@ exports.getUsers = async (req, res) => {
 exports.addItem = async (req, res) => {
     try {
         const itemData = req.body
-        const user = User.FindOne({_id: req.params.id})
+        const user = await User.findOne({_id: req.params.id})
         if (!user) {
             throw new Error("User not found")
         } else {
@@ -111,11 +120,13 @@ exports.addItem = async (req, res) => {
 exports.removeItem = async (req, res) => {
     try {
         const itemData = req.body
-        const user = User.FindOne({_id: req.params.id})
+        const user = User.findOne({_id: req.params.id})
         if (!user) {
-            throw new Error("No Item found")
+            throw new Error("User not found")
         } else {
-
+            await user.cart.removeFromSet(itemData)
+            await user.save()
+            res.json(user)
         }
     } catch (error) {
         res.status(400).json({ message: error.message })
