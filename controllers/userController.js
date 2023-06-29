@@ -141,7 +141,7 @@ exports.checkoutUser = async (req, res) => {
         } else {
             await user.cart.removeAll()
             await user.save()
-            res.json({user, message: "Items Purchased, Thanks For Shopping"})
+            res.json({user, message: "Items Purchased, Thanks For Shopping!"})
         }
     } catch (error) {
         res.status(400).json({ message: error.message })
