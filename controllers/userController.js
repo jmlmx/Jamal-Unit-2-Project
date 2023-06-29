@@ -62,7 +62,7 @@ exports.logoutUser = async (req, res) => {
         } else {
             user.loggedIn = false
             await user.save()
-            res.json({user, token, message: "Logged Out"})
+            res.json({user, message: "Logged Out"})
         }
     } catch (error) {
         res.status(400).json({ message: error.message })
@@ -119,14 +119,29 @@ exports.addItem = async (req, res) => {
 
 exports.removeItem = async (req, res) => {
     try {
-        const itemData = req.body
+        const item = req.body
         const user = User.findOne({_id: req.params.id})
         if (!user) {
             throw new Error("User not found")
         } else {
-            await user.cart.removeFromSet(itemData)
+            await user.cart.findOneAndDelete(item)
             await user.save()
             res.json(user)
+        }
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
+exports.checkoutUser = async (req, res) => {
+    try {
+        const user = await User.findOne({_id: req.params.id, cart: req.params.cart})
+        if(!user) {
+            throw new Error("User not found")
+        } else {
+            await user.cart.removeAll()
+            await user.save()
+            res.json({user, message: "Items Purchased, Thanks For Shopping"})
         }
     } catch (error) {
         res.status(400).json({ message: error.message })
