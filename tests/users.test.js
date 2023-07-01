@@ -39,10 +39,45 @@ describe("Test the main endpoints", () => {
             expect(response.body).toHaveProperty("token")
     })
 
-    test("It should login a user", async () => {
+    test("It should get a specific user", async  () => {
         const user = new User({
             name: "Jamal Mayon",
             email: "jmayon@web.com",
+            password: "password28"
+        })
+        await user.save()
+
+        const response = await request(app)
+            .get(`/users/${user._id}`)
+        console.log(user, "SPECIFIC USER!")
+
+        expect(response.statusCode).toBe(200)
+        expect(response.body.user._id).toEqual(user.id)
+    })
+
+    test("It should update a user", async () => {
+        const user = new User({
+            name: "Jamal Mayon",
+            email: "jmayon@web.com",
+            password: "password28"
+        })
+        await user.save()
+
+        const response = await request(app)
+            .put(`/users/${user._id}`)
+            .send({name: "Jamal Mayon", email: "jmayon@web.com", password: "Monkeyman"})
+        console.log(user, response.body, "UPDATE!")
+
+        expect(response.statusCode).toBe(200)
+        expect(response.body.name).toEqual("Jamal Mayon")
+        expect(response.body.email).toEqual("jmayon@web.com")
+        expect(response.body.password).toEqual("Monkeyman")
+    })
+
+    test("It should login a user", async () => {
+        const user = new User({
+            name: "Billy Bob",
+            email: "Billy@Bob.com",
             password: "password1",
         })
         await user.save()
@@ -51,13 +86,33 @@ describe("Test the main endpoints", () => {
         const response = await request(app)
             .post("/users/login")
             .set("Authorization", `Bearer ${token}`)
-            .send({ email: "jmayon@web.com", password: "password1"})
-            console.log(user, "CLOUDSCALE!")
+            .send({ email: "Billy@Bob.com", password: "password1"})
+            console.log(user, "LOGIN!")
             console.log(response.body, "CLOUDSCALE!")
         expect(response.statusCode).toBe(200)
-        //expect(response.body.user.name).toEqual("Jamal Mayon")
-        // expect(response.body.user.email).toEqual("jmayon@web.com")
-        // expect(response.body.user.loggedIn).toBe(true)
-        // expect(response.body).toHaveProperty("token")
+        expect(response.body.user.name).toEqual("Billy Bob")
+        expect(response.body.user.email).toEqual("Billy@Bob.com")
+        expect(response.body.user.loggedIn).toBe(true)
+        expect(response.body).toHaveProperty("token")
+    })
+
+    test("It should logout a user", async () => {
+        const user = new User({
+            name: "Joseph Da Bistro",
+            email: "joe@web.com",
+            password: "password43",
+        });
+        await user.save();
+        const token = await user.generateAuthToken();
+
+        const response = await request(app)
+            .post("/users/logout")
+            .set("Authorization", `Bearer ${token}`)
+            .send({ email: "joe@web.com", password: "password43" });
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body.user.loggedIn).toBe(false)
+        expect(response.body.message).toEqual("Logged Out");
+        await user.deleteOne();
     })
 })
