@@ -136,5 +136,25 @@ describe("Test the main endpoints", () => {
         expect(response.body.message).toEqual("User Deleted")
     })
 
-    test("It should add an item to a user")
+    test("It should add an item to a users cart", async () => {
+        const user = new User({
+            name: "Joseph Da Bistro",
+            email: "joe@web.com",
+            password: "password43",
+        })
+        await user.save()
+        const token = await user.generateAuthToken()
+
+        const response = await request(app)
+            .post(`/users/cart/${user._id}`)
+            .set("Authorization", `Bearer ${token}`)
+            .send({
+                name: "Bananas",
+                description: "delicious fruit",
+                price: 1.50
+            })
+            console.log(response.body, "ADD ITEM")
+
+        expect(response.statusCode).toBe(200)
+    })
 })

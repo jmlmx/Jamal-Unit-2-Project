@@ -15,7 +15,7 @@ router.post("/:id", userController.auth, userController.logoutUser)// logout a u
 
 router.put("/:id", userController.auth, userController.updateUser)// update a user
 
-router.put("/cart/:id", userController.auth, userController.addItem)// add items to users cart
+router.post("/cart/:id", userController.auth, userController.addItem)// add items to users cart
 
 router.put("/checkout/:id", userController.auth, userController.checkoutUser)//checkout a user
 

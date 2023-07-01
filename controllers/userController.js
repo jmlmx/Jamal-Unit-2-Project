@@ -126,7 +126,7 @@ exports.removeItem = async (req, res) => {
         if (!user) {
             throw new Error("User not found")
         } else {
-            await user.cart.remove(item)
+            await user.cart.pull(item)
             await user.save()
             res.json(user)
         }
