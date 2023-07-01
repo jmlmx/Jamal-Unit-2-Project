@@ -4,13 +4,15 @@
 
 This Api will allow you to create a user and add items to/remove items from a shopping cart as well as simulate "purchasing" those items.
 
-## How to Install:
-
-Fork the repository and then save the files to a directory of your choosing on your computer
-
 ## Necessary Files:
 
-You'll need a .env file in order to connect a MongoDB Atlas connection string or another database connection string
+node.js
+nodemon
+
+## How to Install:
+
+GitClone the repository and then save the files to a directory of your choosing on your computer
+
 
 ## Starting The App In Dev Mode:
 

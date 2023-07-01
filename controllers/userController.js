@@ -42,12 +42,13 @@ exports.getAUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
     try {
         const user = await User.findOne({email: req.body.email})
-        if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
+        if (!user || !await bcrypt.compare(req.body.password, user.password)) {
         res.status(400).send("Email not found")
         } else {
             user.loggedIn = true
             await user.save()
-            res.json({user})
+            const token = await user.generateAuthToken()
+            res.json({user, token})
         }
     } catch (error) {
         res.status(400).json ({message: error.message})
