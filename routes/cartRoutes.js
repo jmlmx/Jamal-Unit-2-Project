@@ -3,11 +3,14 @@ const router = express.Router()
 const userController = require("../controllers/userController")
 const cartController = require("../controllers/cartController")
 
-router.post("/cart/:id", userController.auth, cartController.addItem)// add items to users cart
+// add items to users cart
+router.post("/cart/:id", userController.auth, cartController.addItem)
 
-router.delete("/cart/:id", userController.auth, cartController.removeItem)//remove item from a users cart
+//remove item from a users cart
+router.delete("/cart/:id", userController.auth, cartController.removeItem)
 
-router.put("/checkout/:id", userController.auth, cartController.checkoutCart)//checkout a user
+//checkout a user
+router.put("/cart/checkout/:id", userController.auth, cartController.checkoutCart)
 
 
 module.exports = router

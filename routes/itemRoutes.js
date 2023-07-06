@@ -17,3 +17,5 @@ router.put("/:id", itemController.updateAnItem)
 
 // Delete An Item
 router.delete("/:id", itemController.deleteAnItem)
+
+module.exports = router

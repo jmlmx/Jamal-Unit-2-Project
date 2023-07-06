@@ -45,13 +45,13 @@ exports.removeItem = async (req, res) => {
 //Checkout Cart
 exports.checkoutCart = async (req, res) => {
     try {
-        //const user = await User.findOne({_id: req.params.id, cart: req.params.cart})
+        const user = req.user
         if(!req.user) {
             throw new Error("User not found")
         } else {
             await req.user.cart.removeAll()
             await req.user.save()
-            res.json({req.user, message: "Items Purchased, Thanks For Shopping!"})
+            res.json({user, message: "Items Purchased, Thanks For Shopping!"})
         }
     } catch (error) {
         res.status(400).json({ message: error.message })
