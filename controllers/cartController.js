@@ -7,15 +7,17 @@ const jwt = require("jsonwebtoken")
 //Add Item To Cart
 exports.addItem = async (req, res) => {
     try {
+        //const user = req.user
+        const user = await User.findOne({_id: req.params.id})
         const itemData = req.body
-        if (!req.user) {
+        if (!user) {
             throw new Error("User not found")
         } else {
             const newItem = await Item.create(itemData)
             await newItem.save()
-            await req.user.cart.addToSet(newItem)
-            await req.user.save()
-            res.json(req.user)
+            await user.cart.addToSet(newItem)
+            await user.save()
+            res.json(user)
         }
     } catch (error) {
         res.status(400).json({ message: error.message })

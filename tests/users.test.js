@@ -24,7 +24,7 @@ afterAll(async () => {
     server.close()
 })
 
-describe("Test the main endpoints", () => {
+describe("Test the user endpoints", () => {
     test("It should create a new user", async () => {
         const response = await request(app)
             .post("/users")
@@ -34,10 +34,10 @@ describe("Test the main endpoints", () => {
                 password: "password28"
             })
         
-            expect(response.statusCode).toBe(200)
-            expect(response.body.user.name).toEqual("Jamal Mayon")
-            expect(response.body.user.email).toEqual("jmayon@web.com")
-            expect(response.body).toHaveProperty("token")
+        expect(response.statusCode).toBe(200)
+        expect(response.body.user.name).toEqual("Jamal Mayon")
+        expect(response.body.user.email).toEqual("jmayon@web.com")
+        expect(response.body).toHaveProperty("token")
     })
 
     test("It should get a specific user", async  () => {
@@ -74,7 +74,6 @@ describe("Test the main endpoints", () => {
         expect(response.statusCode).toBe(200)
         expect(response.body.name).toEqual("Jamal Mayon")
         expect(response.body.email).toEqual("jmayon@web.com")
-        //expect(response.body.password).toEqual("Monkeyman")
     })
 
     test("It should login a user", async () => {
@@ -136,25 +135,4 @@ describe("Test the main endpoints", () => {
         expect(response.body.message).toEqual("User Deleted")
     })
 
-    test("It should add an item to a users cart", async () => {
-        const user = new User({
-            name: "Joseph Da Bistro",
-            email: "joe@web.com",
-            password: "password43",
-        })
-        await user.save()
-        const token = await user.generateAuthToken()
-
-        const response = await request(app)
-            .post(`/users/cart/${user._id}`)
-            .set("Authorization", `Bearer ${token}`)
-            .send({
-                name: "Bananas",
-                description: "delicious fruit",
-                price: 1.50
-            })
-            console.log(response.body, "ADD ITEM")
-
-        expect(response.statusCode).toBe(200)
-    })
 })
