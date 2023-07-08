@@ -43,7 +43,7 @@ You can start the app normally by inputting the command <pre>npm run start</pre>
 ## Planning/Prep:
 
 ### Github Project
-<a href=https://github.com/users/jmlmx/projects/2/views/1>Click For Github Project Page</a>
+<a href=https://github.com/users/jmlmx/projects/2/views/1>Github Project Page</a>
 
 ### DrawSQL:
 ![DrawSQL](<assets/Project 2 DrawSQL.png>)
