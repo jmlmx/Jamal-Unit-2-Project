@@ -8,7 +8,9 @@
   },
   "scripts": {
     "test": "jest",
-    "testCart": "jest --testPathPattern=carts.test.js",
+    "testUsers": "jest --testPathPattern=users.test.js",
+    "testCarts": "jest --testPathPattern=carts.test.js",
+    "testItems": "jest --testPathPattern=items.test.js",
     "start": "node server.js",
     "dev": "nodemon",
     "dev:load": "DEV=true nodemon server.js",

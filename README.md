@@ -32,9 +32,41 @@ This Api will allow you to create a user and add items to/remove items from a sh
 You can run the app in dev mode when in VS Code by inputting the command
 <pre>npm run dev</pre> This will allow you to make changes while keeping the server from shutting off after each change.
 
+You should get  confirmation of <pre>Ears Open on Port 3000...</pre> as well as <pre>Mongo is vibin' with us....</pre>
+
 ## Making an API request in Postman:
 
-## How To Run Tests:
+1. Be sure to turn on your server and then open Postman
+
+2. Set the request based on the type you'll be sending(Get, POST, PUT, Delete)
+
+3. Put the request in the URL (reference your routes folder), look at the routes requiring authentication, these will require changes to the authorization
+
+4. Set the proper headers(authentication necessary endpoints only), body(raw JSON)
+
+5. Input the required information in the body depending on the endpoint and send the request
+
+## How To Run Supertest Tests/Artillery Tests:
+
+### Jest & Supertest:
+
+1. If the app is running press ctrl + c
+
+2. In the terminal input <pre> npm run test</pre> this will test all test suites
+
+3. If you want to test only user endpoints input into the terminal <pre>npm run testUsers</pre>
+
+4. If you want to test only cart endpoints input into the terminal <pre>npm run testCarts</pre>
+
+5. If you want to test only item endpoints input into the terminal <pre>npm run testItems</pre>
+
+### Artillery Tests:
+
+1. Split your terminal in VS Code
+
+2. In the right terminal input <pre>npm run dev:load</pre> ths will start your server in dev mode so that all users created will be deleted once testing is over
+
+3. In the left terminal input <pre>npm run load</pre> this will run 1200 server requests over 1 minute, you should receive 1200 code: 200.
 
 ## How To Start The App:
 
