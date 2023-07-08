@@ -1,3 +1,4 @@
+require("dotenv").config()
 const mongoose = require("mongoose")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
@@ -18,7 +19,7 @@ userSchema.pre("save", async function(next) {
 })
 
 userSchema.methods.generateAuthToken = async function() {
-    const token = jwt.sign({_id: this._id}, "cloud-scale")
+    const token = jwt.sign({_id: this._id}, process.env.SECRET_KEY)
     return token
 }
 

@@ -1,3 +1,4 @@
+require("dotenv").config()
 const User = require("../models/user")
 const Cart = require("../models/cart")
 const Item = require("../models/item")
@@ -8,7 +9,7 @@ const jwt = require("jsonwebtoken")
 exports.auth = async (req, res, next) => {
     try {
         let token = req.header("Authorization").replace("Bearer ", "")
-        const data = jwt.verify(token, "cloud-scale")
+        const data = jwt.verify(token, process.env.SECRET_KEY)
         const user = await User.findOne({_id: data._id})
         if(!user) {
             throw new Error()
