@@ -45,6 +45,8 @@ You can start the app normally by inputting the command "npm start"
 
 <a href=https://github.com/users/jmlmx/projects/2/views/1>Github Project</a>
 
+### DrawSQL:
 ![DrawSQL](<assets/Project 2 DrawSQL.png>)
 
+### Wire-frame:
 ![Wire-frame](<assets/Project 2 Wireframe.png>)
