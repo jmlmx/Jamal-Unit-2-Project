@@ -18,20 +18,19 @@ This Api will allow you to create a user and add items to/remove items from a sh
 
 1. Clone the repository and then save the files to a directory of your choosing on your computer
 
-2. Install the dependencies by running <pre>npm i</pre> in the terminal(you'll need Node.js already installed for this command to work)
+2. Install the dependencies by running <pre>npm i</pre> in the terminal (you'll need Node.js already installed for this command to work)
 
 3. create a .env file in your repos root directory
 
 4. Check that the .gitignore has both the ".env" and "node_modules" files in there
 
-5. In the .env add your connection string for your MongoDB Database ex:<pre>MONGO_URI="your-string-here"</pre> and a variable for your jwt secret key ex: <pre>SECRET_KEY="your-secret-key-here"</pre>.
-
+5. In the .env add your connection string for your MongoDB Database ex:<pre>MONGO_URI="your-string-here"</pre> and a variable for your jwt secret key ex: <pre>SECRET_KEY="your-secret-key-here"</pre>
 
 
 ## Starting The App In Dev Mode:
 
 You can run the app in dev mode when in VS Code by inputting the command
-"npm run dev". This will allow you to make changes while keeping the server from shutting off after each change.
+<pre>npm run dev</pre> This will allow you to make changes while keeping the server from shutting off after each change.
 
 ## Making an API request in Postman:
 
