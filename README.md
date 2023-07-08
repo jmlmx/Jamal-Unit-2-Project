@@ -18,13 +18,13 @@ This Api will allow you to create a user and add items to/remove items from a sh
 
 1. Clone the repository and then save the files to a directory of your choosing on your computer
 
-2. Install the dependencies by running "npm i" in the terminal(you'll need Node.js already installed for this command to work)
+2. Install the dependencies by running <pre>npm i</pre> in the terminal(you'll need Node.js already installed for this command to work)
 
 3. create a .env file in your repos root directory
 
 4. Check that the .gitignore has both the ".env" and "node_modules" files in there
 
-5. In the .env add MONGO_URI connection string and a variable for your jwt secret key.
+5. In the .env add your connection string for your MongoDB Database ex:<pre>MONGO_URI="your-string-here"</pre> and a variable for your jwt secret key ex: <pre>SECRET_KEY="your-secret-key-here"</pre>.
 
 
 
