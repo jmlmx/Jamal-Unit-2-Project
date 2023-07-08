@@ -31,7 +31,7 @@ This Api will allow you to create a user and add items to/remove items from a sh
 ## Starting The App In Dev Mode:
 
 You can run the app in dev mode when in VS Code by inputting the command
-"npm run dev". This will allow you to make changes while keeping the server from stopping after each change.
+"npm run dev". This will allow you to make changes while keeping the server from shutting off after each change.
 
 ## Making an API request in Postman:
 
@@ -39,11 +39,12 @@ You can run the app in dev mode when in VS Code by inputting the command
 
 ## How To Start The App:
 
-You can start the app normally by inputting the command "npm start"
+You can start the app normally by inputting the command <pre>npm run start</pre>
 
 ## Planning/Prep:
 
-<a href=https://github.com/users/jmlmx/projects/2/views/1>Github Project</a>
+### Github Project
+<a href=https://github.com/users/jmlmx/projects/2/views/1>Click For Github Project Page</a>
 
 ### DrawSQL:
 ![DrawSQL](<assets/Project 2 DrawSQL.png>)
