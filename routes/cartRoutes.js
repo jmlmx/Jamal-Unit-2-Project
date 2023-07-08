@@ -4,13 +4,13 @@ const userController = require("../controllers/userController")
 const cartController = require("../controllers/cartController")
 
 // add items to users cart
-router.post("/cart/:id", userController.auth, cartController.addItem)
+router.post("/:id", userController.auth, cartController.addItem)
 
 //remove item from a users cart
-router.delete("/cart/:id", userController.auth, cartController.removeItem)
+router.delete("/:id", userController.auth, cartController.removeItem)
 
 //checkout a user
-router.put("/cart/checkout/:id", userController.auth, cartController.checkoutCart)
+router.put("/checkout/:id", userController.auth, cartController.checkoutCart)
 
 
 module.exports = router

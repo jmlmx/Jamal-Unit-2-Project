@@ -33,7 +33,7 @@ describe("It should test cart endpoints", () => {
             password: "password28"
         })
         await user.save()
-        const token = user.generateAuthToken()
+        const token = await user.generateAuthToken()
 
         const response = await request(app)
             .post(`/cart/${user._id}`)
@@ -43,17 +43,62 @@ describe("It should test cart endpoints", () => {
                 description: "A comfortable pair of Adidas Max Lite Runner Sneakers",
                 price: 65
             })
-            console.log(response.body)
 
         expect(response.statusCode).toBe(200)
-
     })
 
-    test("It should remove an item from a users cart", () => {
-        
+    test("It should remove an item from a users cart", async () => {
+        const user = new User({
+            name: "Jamal Mayon",
+            email: "jmayon@web.com",
+            password: "password28"
+        })
+        const newItem = new Item({
+            name: "Adidas Running Shoes",
+            description: "A comfortable pair of Adidas Max Lite Runner Sneakers",
+            price: 65
+        })
+        await user.cart.push(newItem)
+        await user.save()
+        const token = await user.generateAuthToken()
+
+        const response = await request(app)
+        .delete(`/cart/${user._id}`)
+        .set("Authorization", `Bearer ${token}`)
+        .send({
+            name: "Adidas Running Shoes",
+            description: "A comfortable pair of Adidas Max Lite Runner Sneakers",
+            price: 65
+        })
+
+        expect(response.statusCode).toBe(200)
     })
 
-    test("It should checkout a users cart", () => {
-        
+    test("It should checkout a users cart", async () => {
+        const user = new User({
+            name: "Jamal Mayon",
+            email: "jmayon@web.com",
+            password: "password28"
+        })
+        const newItem = new Item({
+            name: "Adidas Running Shoes",
+            description: "A comfortable pair of Adidas Max Lite Runner Sneakers",
+            price: 65
+        })
+        const newItem2 = new Item({
+            name: "Polo Shirt",
+            description: "Ralph Lauren Polo Shirt",
+            price: 65
+        })
+        user.cart.push(newItem)
+        user.cart.push(newItem2)
+        await user.save()
+        const token = await user.generateAuthToken()
+
+        const response = await request(app)
+        .put(`/cart/checkout/${user._id}`)
+        .set("Authorization", `Bearer ${token}`)
+
+        expect(response.statusCode).toBe(200)
     })
 })

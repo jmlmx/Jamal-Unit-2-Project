@@ -7,8 +7,8 @@ const jwt = require("jsonwebtoken")
 //Add Item To Cart
 exports.addItem = async (req, res) => {
     try {
-        //const user = req.user
-        const user = await User.findOne({_id: req.params.id})
+        const user = req.user
+        //const user = await User.findOne({_id: req.params.id})
         const itemData = req.body
         if (!user) {
             throw new Error("User not found")
@@ -27,16 +27,13 @@ exports.addItem = async (req, res) => {
 //Remove Item From Cart
 exports.removeItem = async (req, res) => {
     try {
-        const item = req.body
-        if (!req.user) {
+        const user = req.user
+        const item = await Item.findOne({_id: req.params.id})
+        if (!user) {
             throw new Error("User not found")
         } else {
-            await req.user.cart.removeItem(item)
-            // await req.user.cart.updateOne(
-            //     {_id: ObjectId(item._id)},
-            //     {$pull: {item}}
-            // )
-            await req.user.save()
+            await user.cart.remove(item)
+            await user.save()
             res.json(req.user)
         }
     } catch (error) {
@@ -48,11 +45,11 @@ exports.removeItem = async (req, res) => {
 exports.checkoutCart = async (req, res) => {
     try {
         const user = req.user
-        if(!req.user) {
+        if (!user) {
             throw new Error("User not found")
         } else {
-            await req.user.cart.removeAll()
-            await req.user.save()
+            await user.cart.splice(0, user.cart.length)
+            await user.save()
             res.json({user, message: "Items Purchased, Thanks For Shopping!"})
         }
     } catch (error) {

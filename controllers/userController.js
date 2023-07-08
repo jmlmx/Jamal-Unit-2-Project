@@ -62,7 +62,7 @@ exports.loginUser = async (req, res) => {
             user.loggedIn = true
             await user.save()
             const token = await user.generateAuthToken()
-            res.json({user, token})
+            res.json({user, message: "Logged In", token})
         }
     } catch (error) {
         res.status(400).json ({message: error.message})
